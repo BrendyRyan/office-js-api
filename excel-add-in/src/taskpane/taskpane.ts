@@ -26,7 +26,7 @@ Office.onReady((info) => {
 });
 
 /** Default helper for invoking an action and handling errors. */
-async function tryCatch(callback): Promise<void> {
+export async function tryCatch(callback): Promise<void> {
   try {
     await callback();
   } catch (error) {

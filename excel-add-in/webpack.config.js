@@ -21,7 +21,7 @@ module.exports = async (env, options) => {
       polyfill: ["core-js/stable", "regenerator-runtime/runtime"],
       taskpane: "./src/taskpane/taskpane.ts",
       commands: "./src/commands/commands.ts",
-      popup: "./src/dialogs/popup.js",
+      popup: "./src/dialogs/popup.ts",
     },
     output: {
       devtoolModuleFilenameTemplate: "webpack:///[resource-path]?[loaders]",

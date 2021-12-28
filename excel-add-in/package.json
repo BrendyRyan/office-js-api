@@ -9,8 +9,7 @@
   "config": {
     "app_to_debug": "excel",
     "app_type_to_debug": "desktop",
-    "dev_server_port": 3000,
-    "document":"https://1drv.ms/x/s!AkqCUj9doqVejII7PsfuLdNXlBzL8w?e=7ddhnK"
+    "dev_server_port": 3000
   },
   "scripts": {
     "build": "webpack --mode production",

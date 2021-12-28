@@ -16,17 +16,30 @@ Office.onReady((info) => {
     }
 
     // Assign event handlers and other initialization logic.
-    document.getElementById("create-table").onclick = createTable;
-    document.getElementById("filter-table").onclick = filterTable;
-    document.getElementById("sort-table").onclick = sortTable;
-    document.getElementById("create-chart").onclick = createChart;
-    document.getElementById("freeze-header").onclick = freezeHeader;
+    document.getElementById("create-table").onclick = () => tryCatch(createTable);
+    document.getElementById("filter-table").onclick = () => tryCatch(filterTable);
+    document.getElementById("sort-table").onclick = () => tryCatch(sortTable);
+    document.getElementById("create-chart").onclick = () => tryCatch(createChart);
+    document.getElementById("freeze-header").onclick = () => tryCatch(freezeHeader);
     document.getElementById("open-dialog").onclick = openDialog;
   }
 });
 
-function createTable() {
-  Excel.run(function (context) {
+/** Default helper for invoking an action and handling errors. */
+async function tryCatch(callback): Promise<void> {
+  try {
+    await callback();
+  } catch (error) {
+    // Note: In a production add-in, you'd want to notify the user through your add-in's UI.
+    console.log("Error: " + error);
+    if (error instanceof OfficeExtension.Error) {
+      console.log("Debug info: " + JSON.stringify(error.debugInfo));
+    }
+  }
+}
+
+async function createTable() {
+  await Excel.run(async function (context) {
     // TODO1: Queue table creation logic here.
     var currentWorksheet = context.workbook.worksheets.getActiveWorksheet();
     var expensesTable = currentWorksheet.tables.add("A1:D1", true /*hasHeaders*/);
@@ -50,34 +63,24 @@ function createTable() {
     expensesTable.getRange().format.autofitColumns();
     expensesTable.getRange().format.autofitRows();
 
-    return context.sync();
-  }).catch(function (error) {
-    console.log("Error: " + error);
-    if (error instanceof OfficeExtension.Error) {
-      console.log("Debug info: " + JSON.stringify(error.debugInfo));
-    }
+    await context.sync();
   });
 }
 
-function filterTable() {
-  Excel.run(function (context) {
+async function filterTable() {
+  await Excel.run(async function (context) {
     // TODO1: Queue commands to filter out all expense categories except Groceries and Education.
     var currentWorksheet = context.workbook.worksheets.getActiveWorksheet();
     var expensesTable = currentWorksheet.tables.getItem("ExpensesTable");
     var categoryFilter = expensesTable.columns.getItem("Category").filter;
     categoryFilter.applyValuesFilter(["Education", "Groceries"]);
 
-    return context.sync();
-  }).catch(function (error) {
-    console.log("Error: " + error);
-    if (error instanceof OfficeExtension.Error) {
-      console.log("Debug info: " + JSON.stringify(error.debugInfo));
-    }
+    await context.sync();
   });
 }
 
-function sortTable() {
-  Excel.run(function (context) {
+async function sortTable() {
+  await Excel.run(async function (context) {
     // TODO1: Queue commands to sort the table by Merchant name.
     var currentWorksheet = context.workbook.worksheets.getActiveWorksheet();
     var expensesTable = currentWorksheet.tables.getItem("ExpensesTable");
@@ -90,17 +93,12 @@ function sortTable() {
 
     expensesTable.sort.apply(sortFields);
 
-    return context.sync();
-  }).catch(function (error) {
-    console.log("Error: " + error);
-    if (error instanceof OfficeExtension.Error) {
-      console.log("Debug info: " + JSON.stringify(error.debugInfo));
-    }
+    await context.sync();
   });
 }
 
-function createChart() {
-  Excel.run(function (context) {
+async function createChart() {
+  await Excel.run(async function (context) {
     // TODO1: Queue commands to get the range of data to be charted.
     var currentWorksheet = context.workbook.worksheets.getActiveWorksheet();
     var expensesTable = currentWorksheet.tables.getItem("ExpensesTable");
@@ -118,27 +116,17 @@ function createChart() {
     chart.dataLabels.format.font.color = "black";
     chart.series.getItemAt(0).name = "Value in \u20AC";
 
-    return context.sync();
-  }).catch(function (error) {
-    console.log("Error: " + error);
-    if (error instanceof OfficeExtension.Error) {
-      console.log("Debug info: " + JSON.stringify(error.debugInfo));
-    }
+    await context.sync();
   });
 }
 
-function freezeHeader() {
-  Excel.run(function (context) {
+async function freezeHeader() {
+  await Excel.run(async function (context) {
     // TODO1: Queue commands to keep the header visible when the user scrolls.
     var currentWorksheet = context.workbook.worksheets.getActiveWorksheet();
     currentWorksheet.freezePanes.freezeRows(1);
 
-    return context.sync();
-  }).catch(function (error) {
-    console.log("Error: " + error);
-    if (error instanceof OfficeExtension.Error) {
-      console.log("Debug info: " + JSON.stringify(error.debugInfo));
-    }
+    await context.sync();
   });
 }
 

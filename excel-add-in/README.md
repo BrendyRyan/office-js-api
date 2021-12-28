@@ -1,8 +1,17 @@
-# Excel Javascript API tutorial
+# Excel Add-In Tutorial
 
 _Completed Dec 28, 2021_
+
 From this website: [Office Add-In Tutorial](https://docs.microsoft.com/en-us/office/dev/add-ins/tutorials/excel-tutorial)
 
-An interesting way to use javascript and excel together. The JS API has similar functionality to VBA. It appears that VBA has far more functionality since it has been around for so many years, however the JS API is growing and new features are being added. It's pretty neat to be able to use JS in Excel.
+Followed the tutorial to build an Excel add in. Features:
 
-The tutorial was excellent.
+- Create table
+- Sort table
+- Filter table
+- Add chart
+- Freeze panes
+- Protect workbook
+- Get user feedback using modal (username)
+
+Very well done tutorial.

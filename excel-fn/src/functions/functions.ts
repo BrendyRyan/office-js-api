@@ -1,4 +1,4 @@
-/* global clearInterval, console, CustomFunctions, setInterval */
+﻿/* global clearInterval, console, CustomFunctions, setInterval */
 
 /**
  * Adds two numbers.
@@ -63,4 +63,45 @@ export function logMessage(message: string): string {
   console.log(message);
 
   return message;
+}
+
+/**
+ * Gets the star count for a given Github repository.
+ * @customfunction
+ * @param {string} userName string name of Github user or organization.
+ * @param {string} repoName string name of the Github repository.
+ * @return {number} number of stars given to a Github repository.
+ */
+async function getStarCount(userName, repoName) {
+  try {
+    //You can change this URL to any web request you want to work with.
+    const url = "https://api.github.com/repos/" + userName + "/" + repoName;
+    const response = await fetch(url);
+    //Expect that status code is in 200-299 range
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    const jsonResponse = await response.json();
+    return jsonResponse.watchers_count;
+  } catch (error) {
+    return error;
+  }
+}
+
+/**
+ * @customfunction
+ * @param {string} address The address of the cell from which to retrieve the value.
+ * @returns The value of the cell at the input address.
+ **/
+async function getRangeValue(address) {
+  // Retrieve the context object.
+  var context = new Excel.RequestContext();
+
+  // Use the context object to access the cell at the input address.
+  var range = context.workbook.worksheets.getActiveWorksheet().getRange(address);
+  range.load("values");
+  await context.sync();
+
+  // Return the value of the cell at the input address.
+  return range.values[0][0];
 }

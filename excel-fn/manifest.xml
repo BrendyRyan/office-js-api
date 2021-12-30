@@ -6,14 +6,14 @@
   <!-- Begin Basic Settings: Add-in metadata, used for all versions of Office unless override provided. -->
 
   <!-- IMPORTANT! Id must be unique for your add-in, if you reuse this manifest ensure that you change this id to a new GUID. -->
-  <Id>7a8fcbfa-a55a-4729-a014-f497f84b42b6</Id>
+  <Id>9fb0a957-74b5-4126-9d82-ca6d1d7cbb42</Id>
   <!--Version. Updates from the store only get triggered if there is a version change. -->
   <Version>1.0.0.0</Version>
   <ProviderName>Contoso</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <!-- The display name of your add-in. Used on the store and various places of the Office UI such as the add-ins dialog. -->
   <DisplayName DefaultValue="Brendan's Add-In Test"/>
-  <Description DefaultValue="Following the MS Tutorial."/>
+  <Description DefaultValue="Write your own Excel functions in TypeScript."/>
   <!-- Icon for your add-in. Used on installation screens and the add-ins dialog. -->
   <IconUrl DefaultValue="https://localhost:3000/assets/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/icon-64.png"/>
@@ -34,7 +34,9 @@
   </Hosts>
   <Requirements>
     <Sets DefaultMinVersion="1.1">
-      <Set Name="CustomFunctionsRuntime" MinVersion="1.1"/>
+      <!-- choose runtime, custom or shared. Shared means context is shared betwen functions, commands and taskpane. Seems to be the best otpion -->
+      <!-- <Set Name="CustomFunctionsRuntime" MinVersion="1.1"/> -->
+      <Set Name="SharedRuntime" MinVersion="1.1"/>
     </Sets>
     <!-- List of excel requirements -->
   </Requirements>
@@ -51,6 +53,10 @@
       <!-- Excel host is Workbook, Word host is Document, and PowerPoint host is Presentation. -->
       <!-- Make sure the hosts you override match the hosts declared in the top section of the manifest. -->
       <Host xsi:type="Workbook">
+        <!-- Set the runtime for a sharedruntime. long = the add in stays live. Short means it stops when taskpane closes -->
+        <Runtimes>
+          <Runtime resid="Taskpane.Url" lifetime="long" />
+        </Runtimes>
         <!-- Form factor. Specifies the settings for an add-in for all form factors. Currently, the only feature using AllFormFactors is custom functions. AllFormFactors is a required element when using custom functions. -->
         <AllFormFactors>
           <ExtensionPoint xsi:type="CustomFunctions">
@@ -58,7 +64,7 @@
               <SourceLocation resid="Functions.Script.Url"/>
             </Script>
             <Page>
-              <SourceLocation resid="Functions.Page.Url"/>
+              <SourceLocation resid="Taskpane.Url"/>
             </Page>
             <Metadata>
               <SourceLocation resid="Functions.Metadata.Url"/>
@@ -66,8 +72,8 @@
             <Namespace resid="Functions.Namespace"/>
           </ExtensionPoint>
         </AllFormFactors>
+        <!--"This code enables a customizable message to be displayed when the add-in is loaded successfully upon individual install."-->
         <DesktopFormFactor>
-          <!--"This code enables a customizable message to be displayed when the add-in is loaded successfully upon individual install."-->
           <GetStarted>
             <!-- Title of the Getting Started callout. resid points to a ShortString resource -->
             <Title resid="GetStarted.Title"/>
@@ -78,7 +84,7 @@
           </GetStarted>
           <!-- Function file is a HTML page that includes the JavaScript where functions for ExecuteAction will be called.
             Think of the FunctionFile as the code behind ExecuteFunction. -->
-          <FunctionFile resid="Commands.Url"/>
+          <FunctionFile resid="Taskpane.Url"/>
           <!-- PrimaryCommandSurface is the main Office Ribbon. -->
           <ExtensionPoint xsi:type="PrimaryCommandSurface">
             <!-- Use OfficeTab to extend an existing Tab. Use CustomTab to create a new tab. -->
@@ -110,10 +116,11 @@
                     <bt:Image size="80" resid="Icon.80x80"/>
                   </Icon>
                   <!-- This is what happens when the command is triggered (E.g. click on the Ribbon). Supported actions are ExecuteFunction or ShowTaskpane. -->
-                  <Action xsi:type="ShowTaskpane">
-                    <TaskpaneId>ButtonId1</TaskpaneId>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>action</FunctionName>
+                    <!-- <TaskpaneId>ButtonId1</TaskpaneId> -->
                     <!-- Provide a url resource id for the location that will be displayed on the task pane. -->
-                    <SourceLocation resid="Taskpane.Url"/>
+                    <!-- <SourceLocation resid="Taskpane.Url"/> -->
                   </Action>
                 </Control>
                 <Control xsi:type="Button" id="ToggleProtection">
@@ -134,7 +141,7 @@
               </Group>
               <Label resid="Ryfi.Label"/>
             </CustomTab>
-            <!-- </OfficeTab> -->
+            <!--    </OfficeTab> -->
           </ExtensionPoint>
         </DesktopFormFactor>
       </Host>
@@ -149,21 +156,21 @@
         <bt:Image id="Icon.80x80" DefaultValue="https://localhost:3000/assets/icon-80.png"/>
       </bt:Images>
       <bt:Urls>
-        <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812"/>
-        <bt:Url id="Commands.Url" DefaultValue="https://localhost:3000/commands.html"/>
-        <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/taskpane.html"/>
         <bt:Url id="Functions.Script.Url" DefaultValue="https://localhost:3000/dist/functions.js"/>
         <bt:Url id="Functions.Metadata.Url" DefaultValue="https://localhost:3000/dist/functions.json"/>
         <bt:Url id="Functions.Page.Url" DefaultValue="https://localhost:3000/dist/functions.html"/>
+        <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812"/>
+        <bt:Url id="Commands.Url" DefaultValue="https://localhost:3000/commands.html"/>
+        <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/taskpane.html"/>
       </bt:Urls>
       <!-- ShortStrings max characters==125. These are for Label and Title elements-->
       <bt:ShortStrings>
+        <bt:String id="Functions.Namespace" DefaultValue="RYFI"/>
         <bt:String id="GetStarted.Title" DefaultValue="Get started with your sample add-in!"/>
         <bt:String id="CommandsGroup.Label" DefaultValue="Tutorial Tools"/>
         <bt:String id="TaskpaneButton.Label" DefaultValue="Show Taskpane"/>
         <bt:String id="ProtectionButtonLabel" DefaultValue="Toggle Worksheet Protection" />
-        <bt:String id="Functions.Namespace" DefaultValue="RYFI"/>
-        <bt:String id="Ryfi.Label" DefaultValue="Ryfi"/>
+        <bt:String id="Ryfi.Label" DefaultValue="RYFI"/>
       </bt:ShortStrings>
       <!-- LongStrings max characters==250. For Description attributes-->
       <bt:LongStrings>

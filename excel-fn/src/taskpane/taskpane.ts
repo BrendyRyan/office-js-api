@@ -3,6 +3,8 @@
  * See LICENSE in the project root for license information.
  */
 
+/* global console, document, Excel, Office */
+
 /* global console, document, Excel, Office, OfficeExtension */
 
 Office.onReady((info) => {

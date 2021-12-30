@@ -8,6 +8,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const urlDev = "https://localhost:3000/";
 const urlProd = "https://www.contoso.com/"; // CHANGE THIS TO YOUR PRODUCTION DEPLOYMENT LOCATION
 
+/* global require, module, process, __dirname */
+
 async function getHttpsOptions() {
   const httpsOptions = await devCerts.getHttpsServerOptions();
   return { cacert: httpsOptions.ca, key: httpsOptions.key, cert: httpsOptions.cert };
@@ -20,10 +22,10 @@ module.exports = async (env, options) => {
     devtool: "source-map",
     entry: {
       polyfill: ["core-js/stable", "regenerator-runtime/runtime"],
+      functions: "./src/functions/functions.ts",
       taskpane: "./src/taskpane/taskpane.ts",
       commands: "./src/commands/commands.ts",
       popup: "./src/dialogs/popup.ts",
-      functions: "./src/functions/functions.ts",
     },
     output: {
       devtoolModuleFilenameTemplate: "webpack:///[resource-path]?[loaders]",
@@ -64,10 +66,19 @@ module.exports = async (env, options) => {
       ],
     },
     plugins: [
+      new CustomFunctionsMetadataPlugin({
+        output: "functions.json",
+        input: "./src/functions/functions.ts",
+      }),
       new HtmlWebpackPlugin({
         filename: "taskpane.html",
         template: "./src/taskpane/taskpane.html",
-        chunks: ["polyfill", "taskpane"],
+        chunks: ["polyfill", "taskpane","commands","functions","popup"],
+      }),
+      new HtmlWebpackPlugin({
+        filename: "popup.html",
+        template: "./src/dialogs/popup.html",
+        chunks: ["polyfill", "popup"],
       }),
       new CopyWebpackPlugin({
         patterns: [
@@ -88,22 +99,9 @@ module.exports = async (env, options) => {
           },
         ],
       }),
-      new HtmlWebpackPlugin({
-        filename: "commands.html",
-        template: "./src/commands/commands.html",
-        chunks: ["polyfill", "commands"],
-      }),
-      new HtmlWebpackPlugin({
-        filename: "popup.html",
-        template: "./src/dialogs/popup.html",
-        chunks: ["polyfill", "popup"],
-      }),
-      new CustomFunctionsMetadataPlugin({
-        output: "functions.json",
-        input: "./src/functions/functions.ts",
-      }),
     ],
     devServer: {
+      static: [__dirname],
       headers: {
         "Access-Control-Allow-Origin": "*",
       },

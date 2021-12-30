@@ -3,7 +3,7 @@
  * See LICENSE in the project root for license information.
  */
 
-/* global global, Office, self, window, Excel, OfficeExtension, console */
+/* global global, Office, self, window */
 
 import { tryCatch } from "../taskpane/taskpane";
 
@@ -15,16 +15,11 @@ Office.onReady(() => {
  * Shows a notification when the add-in command is executed.
  * @param event
  */
+let _count = 0;
 function action(event: Office.AddinCommands.Event) {
-  const message: Office.NotificationMessageDetails = {
-    type: Office.MailboxEnums.ItemNotificationMessageType.InformationalMessage,
-    message: "Performed action.",
-    icon: "Icon.80x80",
-    persistent: true,
-  };
-
-  // Show a notification message
-  Office.context.mailbox.item.notificationMessages.replaceAsync("action", message);
+  _count++;
+  Office.addin.showAsTaskpane();
+  document.getElementById("random").textContent = "Go" + _count;
 
   // Be sure to indicate when the add-in command function is complete
   event.completed();

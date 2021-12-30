@@ -2,6 +2,7 @@
 
 const devCerts = require("office-addin-dev-certs");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const CustomFunctionsMetadataPlugin = require("custom-functions-metadata-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const urlDev = "https://localhost:3000/";
@@ -22,6 +23,7 @@ module.exports = async (env, options) => {
       taskpane: "./src/taskpane/taskpane.ts",
       commands: "./src/commands/commands.ts",
       popup: "./src/dialogs/popup.ts",
+      functions: "./src/functions/functions.ts",
     },
     output: {
       devtoolModuleFilenameTemplate: "webpack:///[resource-path]?[loaders]",
@@ -95,6 +97,10 @@ module.exports = async (env, options) => {
         filename: "popup.html",
         template: "./src/dialogs/popup.html",
         chunks: ["polyfill", "popup"],
+      }),
+      new CustomFunctionsMetadataPlugin({
+        output: "functions.json",
+        input: "./src/functions/functions.ts",
       }),
     ],
     devServer: {

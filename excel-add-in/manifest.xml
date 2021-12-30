@@ -12,8 +12,8 @@
   <ProviderName>Contoso</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <!-- The display name of your add-in. Used on the store and various places of the Office UI such as the add-ins dialog. -->
-  <DisplayName DefaultValue="test"/>
-  <Description DefaultValue="A template to get started."/>
+  <DisplayName DefaultValue="Brendan's Add-In Test"/>
+  <Description DefaultValue="Following the MS Tutorial."/>
   <!-- Icon for your add-in. Used on installation screens and the add-ins dialog. -->
   <IconUrl DefaultValue="https://localhost:3000/assets/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/icon-64.png"/>
@@ -32,6 +32,12 @@
   <Hosts>
     <Host Name="Workbook"/>
   </Hosts>
+  <Requirements>
+    <Sets DefaultMinVersion="1.1">
+      <Set Name="CustomFunctionsRuntime" MinVersion="1.1"/>
+    </Sets>
+    <!-- List of excel requirements -->
+  </Requirements>
   <DefaultSettings>
     <SourceLocation DefaultValue="https://localhost:3000/taskpane.html"/>
   </DefaultSettings>
@@ -45,7 +51,21 @@
       <!-- Excel host is Workbook, Word host is Document, and PowerPoint host is Presentation. -->
       <!-- Make sure the hosts you override match the hosts declared in the top section of the manifest. -->
       <Host xsi:type="Workbook">
-        <!-- Form factor. Currently only DesktopFormFactor is supported. -->
+        <!-- Form factor. Specifies the settings for an add-in for all form factors. Currently, the only feature using AllFormFactors is custom functions. AllFormFactors is a required element when using custom functions. -->
+        <AllFormFactors>
+          <ExtensionPoint xsi:type="CustomFunctions">
+            <Script>
+              <SourceLocation resid="Functions.Script.Url"/>
+            </Script>
+            <Page>
+              <SourceLocation resid="Functions.Page.Url"/>
+            </Page>
+            <Metadata>
+              <SourceLocation resid="Functions.Metadata.Url"/>
+            </Metadata>
+            <Namespace resid="Functions.Namespace"/>
+          </ExtensionPoint>
+        </AllFormFactors>
         <DesktopFormFactor>
           <!--"This code enables a customizable message to be displayed when the add-in is loaded successfully upon individual install."-->
           <GetStarted>
@@ -62,7 +82,8 @@
           <!-- PrimaryCommandSurface is the main Office Ribbon. -->
           <ExtensionPoint xsi:type="PrimaryCommandSurface">
             <!-- Use OfficeTab to extend an existing Tab. Use CustomTab to create a new tab. -->
-            <OfficeTab id="TabHome">
+            <!-- <OfficeTab id="TabHome"> -->
+            <CustomTab id="TabRyfi">
               <!-- Ensure you provide a unique id for the group. Recommendation for any IDs is to namespace using your company name. -->
               <Group id="CommandsGroup">
                 <!-- Label for your group. resid must point to a ShortString resource. -->
@@ -111,7 +132,9 @@
                   </Action>
                 </Control>
               </Group>
-            </OfficeTab>
+              <Label resid="Ryfi.Label"/>
+            </CustomTab>
+            <!-- </OfficeTab> -->
           </ExtensionPoint>
         </DesktopFormFactor>
       </Host>
@@ -119,6 +142,7 @@
 
     <!-- You can use resources across hosts and form factors. -->
     <Resources>
+      <!-- Need three unages for the below three mandatory sizes (16x16, 32x32, and 80x80) -->
       <bt:Images>
         <bt:Image id="Icon.16x16" DefaultValue="https://localhost:3000/assets/icon-16.png"/>
         <bt:Image id="Icon.32x32" DefaultValue="https://localhost:3000/assets/icon-32.png"/>
@@ -128,15 +152,20 @@
         <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812"/>
         <bt:Url id="Commands.Url" DefaultValue="https://localhost:3000/commands.html"/>
         <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/taskpane.html"/>
+        <bt:Url id="Functions.Script.Url" DefaultValue="https://localhost:3000/dist/functions.js"/>
+        <bt:Url id="Functions.Metadata.Url" DefaultValue="https://localhost:3000/dist/functions.json"/>
+        <bt:Url id="Functions.Page.Url" DefaultValue="https://localhost:3000/dist/functions.html"/>
       </bt:Urls>
-      <!-- ShortStrings max characters==125. -->
+      <!-- ShortStrings max characters==125. These are for Label and Title elements-->
       <bt:ShortStrings>
         <bt:String id="GetStarted.Title" DefaultValue="Get started with your sample add-in!"/>
-        <bt:String id="CommandsGroup.Label" DefaultValue="Commands Group"/>
+        <bt:String id="CommandsGroup.Label" DefaultValue="Tutorial Tools"/>
         <bt:String id="TaskpaneButton.Label" DefaultValue="Show Taskpane"/>
         <bt:String id="ProtectionButtonLabel" DefaultValue="Toggle Worksheet Protection" />
+        <bt:String id="Functions.Namespace" DefaultValue="RYFI"/>
+        <bt:String id="Ryfi.Label" DefaultValue="Ryfi"/>
       </bt:ShortStrings>
-      <!-- LongStrings max characters==250. -->
+      <!-- LongStrings max characters==250. For Description attributes-->
       <bt:LongStrings>
         <bt:String id="GetStarted.Description" DefaultValue="Your sample add-in loaded succesfully. Go to the HOME tab and click the 'Show Taskpane' button to get started."/>
         <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Click to Show a Taskpane"/>

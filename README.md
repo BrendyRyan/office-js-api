@@ -10,7 +10,4 @@ An interesting way to use JavaScript and Excel together. The JS API has similar 
 
 The tutorial was excellent.
 
-I tried the Custom Functions tutorial but my version of NPM and Node are too recent so it didn't work. Just read the docs.
-Also tried the React version. There were a couple errors but it worked. It's old syntax with classes but is a neat idea to try.
-Also tried following the Vue tutorial to get Svelte working but couldn't get it.
-The basic way is probably fine TBH. Just create straightforward functionality.
+Got the custom functions working on _Completed Dec 30, 2021_. Next step is try the React layout.

@@ -11,3 +11,5 @@ An interesting way to use JavaScript and Excel together. The JS API has similar 
 The tutorial was excellent.
 
 Got the custom functions working on _Completed Dec 30, 2021_. Next step is try the React layout.
+
+This article is very helpful from [Stackoverflow](https://stackoverflow.com/questions/58218613/which-preferred-ide-for-office-js-excel-addins). Specifically on an overview of how it works.

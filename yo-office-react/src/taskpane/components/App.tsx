@@ -30,6 +30,10 @@ React.useEffect(()=>{
   {
     icon: "Design",
     primaryText: "Create and visualize like a pro",
+  },
+  {
+    icon: "OfficeLogo",
+    primaryText: "A test for the add in",
   },])
 },[])
 

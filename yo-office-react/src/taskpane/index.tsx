@@ -25,10 +25,19 @@ const render = (Component) => {
 };
 
 /* Render application after Office initializes */
-Office.initialize = () => {
-  isOfficeInitialized = true;
-  render(App);
-};
+Office.onReady(function(info){
+  if (info.host === Office.HostType.Excel) {
+    // Do Excel-specific initialization (for example, make add-in task pane's
+    // appearance compatible with Excel "green").
+}
+if (info.platform === Office.PlatformType.PC) {
+  // Make minor layout changes in the task pane.
+}
+console.log(`Office.js is now ready in ${info.host} on ${info.platform}`);
+  isOfficeInitialized = true
+  render(App)
+})
+
 
 if ((module as any).hot) {
   (module as any).hot.accept("./components/App", () => {

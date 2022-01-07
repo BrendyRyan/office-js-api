@@ -23,6 +23,7 @@ module.exports = async (env, options) => {
       vendor: ["react", "react-dom", "core-js", "@fluentui/react"],
       taskpane: ["react-hot-loader/patch", "./src/taskpane/index.tsx"],
       commands: "./src/commands/commands.ts",
+      popup: "./src/dialogs/popup.js",
     },
     output: {
       devtoolModuleFilenameTemplate: "webpack:///[resource-path]?[loaders]",
@@ -91,6 +92,11 @@ module.exports = async (env, options) => {
         filename: "commands.html",
         template: "./src/commands/commands.html",
         chunks: ["commands"],
+      }),
+      new HtmlWebpackPlugin({
+        filename: "popup.html",
+        template: "./src/dialogs/popup.html",
+        chunks: ["polyfill", "popup"]
       }),
       new webpack.ProvidePlugin({
         Promise: ["es6-promise", "Promise"],

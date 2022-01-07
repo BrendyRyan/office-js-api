@@ -4,6 +4,7 @@ import Header from "./Header";
 import HeroList, { HeroListItem } from "./HeroList";
 import Progress from "./Progress";
 import { tryCatch } from "../lib/utils";
+import {DialogBasicExample} from './Popup'
 
 /* global console, Excel, require  */
 
@@ -18,6 +19,7 @@ export interface AppState {
 
 export default function App(appProps:AppProps){
 const [appState, setAppState] = React.useState([])
+const [popupState, setPopupState] = React.useState(false)
 
 React.useEffect(()=>{
   setAppState([ {
@@ -188,6 +190,10 @@ currentWorksheet.freezePanes.freezeRows(1);
   });
 }
 
+function triggerPopup(){
+setPopupState(!popupState)
+}
+
 const { title, isOfficeInitialized } = appProps;
 
 if (!isOfficeInitialized) {
@@ -198,6 +204,12 @@ if (!isOfficeInitialized) {
       message="Please sideload your addin to see app body."
     />
     );
+  }
+
+  if (popupState === true){
+    return(
+      <DialogBasicExample />
+    )
   }
 
   return (
@@ -224,6 +236,9 @@ if (!isOfficeInitialized) {
         </DefaultButton>
         <DefaultButton className="ms-welcome__action" iconProps={{ iconName: "ChevronRight" }} onClick={freezeHeader}>
           Freeze Header
+        </DefaultButton>
+        <DefaultButton className="ms-welcome__action" iconProps={{ iconName: "ChevronRight" }} onClick={triggerPopup}>
+          Open Popup
         </DefaultButton>
       </HeroList>
     </div>

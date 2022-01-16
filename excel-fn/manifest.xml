@@ -165,16 +165,16 @@
       </bt:Urls>
       <!-- ShortStrings max characters==125. These are for Label and Title elements-->
       <bt:ShortStrings>
-        <bt:String id="Functions.Namespace" DefaultValue="RYFI"/>
+        <bt:String id="Functions.Namespace" DefaultValue="Ryfi"/>
         <bt:String id="GetStarted.Title" DefaultValue="Get started with your sample add-in!"/>
         <bt:String id="CommandsGroup.Label" DefaultValue="Tutorial Tools"/>
         <bt:String id="TaskpaneButton.Label" DefaultValue="Show Taskpane"/>
         <bt:String id="ProtectionButtonLabel" DefaultValue="Toggle Worksheet Protection" />
-        <bt:String id="Ryfi.Label" DefaultValue="RYFI"/>
+        <bt:String id="Ryfi.Label" DefaultValue="Ryfi"/>
       </bt:ShortStrings>
       <!-- LongStrings max characters==250. For Description attributes-->
       <bt:LongStrings>
-        <bt:String id="GetStarted.Description" DefaultValue="Your sample add-in loaded succesfully. Go to the HOME tab and click the 'Show Taskpane' button to get started."/>
+        <bt:String id="GetStarted.Description" DefaultValue="Your sample add-in loaded succesfully. Good luck."/>
         <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Click to Show a Taskpane"/>
         <bt:String id="ProtectionButtonToolTip" DefaultValue="Click to protect or unprotect the current worksheet." />
       </bt:LongStrings>

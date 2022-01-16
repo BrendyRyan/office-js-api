@@ -99,6 +99,16 @@ module.exports = async (env, options) => {
         template: "./src/dialogs/popup.html",
         chunks: ["polyfill", "popup"]
       }),
+      new HtmlWebpackPlugin({
+        filename: "commands.html",
+        template: "./src/commands/commands.html",
+        chunks: ["commands"],
+      }),
+      new HtmlWebpackPlugin({
+        filename: "functions.html",
+        template: "./src/functions/functions.html",
+        chunks: ["functions"],
+      }),
       new webpack.ProvidePlugin({
         Promise: ["es6-promise", "Promise"],
       }),

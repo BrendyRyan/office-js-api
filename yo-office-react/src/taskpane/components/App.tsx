@@ -201,11 +201,11 @@ if (!isOfficeInitialized) {
         <DefaultButton className="ms-welcome__action" iconProps={{ iconName: "ChevronRight" }} onClick={()=>tryCatch(createTable)}>
           Create Table
         </DefaultButton>
-        <DefaultButton className="ms-welcome__action" iconProps={{ iconName: "ChevronRight" }} onClick={()=>tryCatch(filterTable)}>
-          Filter Table
-        </DefaultButton>
         <DefaultButton className="ms-welcome__action" iconProps={{ iconName: "ChevronRight" }} onClick={()=>tryCatch(sortTable)}>
           Sort Table
+        </DefaultButton>
+        <DefaultButton className="ms-welcome__action" iconProps={{ iconName: "ChevronRight" }} onClick={()=>tryCatch(filterTable)}>
+          Filter Table
         </DefaultButton>
         <DefaultButton className="ms-welcome__action" iconProps={{ iconName: "ChevronRight" }} onClick={()=>tryCatch(createChart)}>
           Create Chart
@@ -219,6 +219,9 @@ if (!isOfficeInitialized) {
         <br/>
         <br/>
         <label htmlFor="user-name" id="user-name"></label>
+        <br/>
+        <br/>
+        <label htmlFor="runtimeTest" id="runtimeTest"></label>
         <br />
         <br />
       </HeroList>

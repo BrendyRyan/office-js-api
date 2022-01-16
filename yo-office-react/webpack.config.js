@@ -3,6 +3,7 @@
 const devCerts = require("office-addin-dev-certs");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CustomFunctionsMetadataPlugin = require("custom-functions-metadata-plugin");
 const webpack = require("webpack");
 
 const urlDev = "https://localhost:3000/";
@@ -23,6 +24,7 @@ module.exports = async (env, options) => {
       vendor: ["react", "react-dom", "core-js", "@fluentui/react"],
       taskpane: ["react-hot-loader/patch", "./src/taskpane/index.tsx"],
       commands: "./src/commands/commands.ts",
+      functions: "./src/functions/functions.ts",
       popup: "./src/dialogs/popup.js",
     },
     output: {
@@ -86,12 +88,11 @@ module.exports = async (env, options) => {
       new HtmlWebpackPlugin({
         filename: "taskpane.html",
         template: "./src/taskpane/taskpane.html",
-        chunks: ["taskpane", "vendor", "polyfills"],
+        chunks: ["taskpane", "vendor", "polyfills","commands","functions"],
       }),
-      new HtmlWebpackPlugin({
-        filename: "commands.html",
-        template: "./src/commands/commands.html",
-        chunks: ["commands"],
+      new CustomFunctionsMetadataPlugin({
+        output: "functions.json",
+        input: "./src/functions/functions.ts",
       }),
       new HtmlWebpackPlugin({
         filename: "popup.html",

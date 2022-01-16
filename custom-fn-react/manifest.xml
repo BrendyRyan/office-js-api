@@ -3,12 +3,12 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
   xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="TaskPaneApp">
-  <Id>f4c4b6fd-b7c5-4a99-9008-5b71cdc6731e</Id>
+  <Id>e433bca2-a112-4570-b8fa-f67e173a4346</Id>
   <Version>1.0.0.0</Version>
   <ProviderName>Contoso</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
-  <DisplayName DefaultValue="yo-office-react"/>
-  <Description DefaultValue="A template to get started."/>
+  <DisplayName DefaultValue="custom-fn-react"/>
+  <Description DefaultValue="Write your own Excel functions in JavaScript."/>
   <IconUrl DefaultValue="https://localhost:3000/assets/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/icon-64.png"/>
   <SupportUrl DefaultValue="https://www.contoso.com/help"/>
@@ -36,15 +36,15 @@
         <AllFormFactors>
           <ExtensionPoint xsi:type="CustomFunctions">
             <Script>
-              <SourceLocation resid="Functions.Script.Url" />
+              <SourceLocation resid="Functions.Script.Url"/>
             </Script>
             <Page>
               <SourceLocation resid="Taskpane.Url"/>
             </Page>
             <Metadata>
-              <SourceLocation resid="Functions.Metadata.Url" />
+              <SourceLocation resid="Functions.Metadata.Url"/>
             </Metadata>
-            <Namespace resid="Functions.Namespace" />
+            <Namespace resid="Functions.Namespace"/>
           </ExtensionPoint>
         </AllFormFactors>
         <DesktopFormFactor>
@@ -79,26 +79,6 @@
                     <FunctionName>action</FunctionName>
                   </Action>
                 </Control>
-                <Control xsi:type="Button" id="ToggleProtection">
-                  <!-- TODO1: Unique (in manifest) name for button -->
-                  <Label resid="ProtectionButtonLabel"/>
-                  <!--TODO2: Button label -->
-                  <Supertip>
-                    <Title resid="ProtectionButtonLabel"/>
-                    <!-- TODO3: Button tool tip title -->
-                    <Description resid="ProtectionButtonToolTip"/>
-                    <!-- TODO4: Button tool tip description -->
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.16x16"/>
-                    <bt:Image size="32" resid="Icon.32x32"/>
-                    <bt:Image size="80" resid="Icon.80x80"/>
-                  </Icon>
-                  <!-- TODO6: Identify the function.-->
-                  <Action xsi:type="ExecuteFunction">                    <!-- TODO5: Specify the type of action-->
-                    <FunctionName>toggleProtection</FunctionName>
-                  </Action>
-                </Control>
               </Group>
               <Label resid="Ryfi.Label"/>
             </CustomTab>
@@ -114,25 +94,23 @@
         <bt:Image id="Icon.80x80" DefaultValue="https://localhost:3000/assets/icon-80.png"/>
       </bt:Images>
       <bt:Urls>
+        <bt:Url id="Functions.Script.Url" DefaultValue="https://localhost:3000/dist/functions.js"/>
+        <bt:Url id="Functions.Metadata.Url" DefaultValue="https://localhost:3000/dist/functions.json"/>
+        <bt:Url id="Functions.Page.Url" DefaultValue="https://localhost:3000/dist/functions.html"/>
         <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812"/>
         <bt:Url id="Commands.Url" DefaultValue="https://localhost:3000/commands.html"/>
         <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/taskpane.html"/>
-        <bt:Url id="Functions.Script.Url" DefaultValue="https://localhost:3000/dist/functions.js" />
-        <bt:Url id="Functions.Metadata.Url" DefaultValue="https://localhost:3000/dist/functions.json" />
-        <bt:Url id="Functions.Page.Url" DefaultValue="https://localhost:3000/dist/functions.html" />
       </bt:Urls>
       <bt:ShortStrings>
-        <bt:String id="GetStarted.Title" DefaultValue="Get started with your sample add-in!"/>
+        <bt:String id="Functions.Namespace" DefaultValue="Ryfi"/>
+        <bt:String id="Ryfi.Label" DefaultValue="Ryfi"/>
+        <bt:String id="GetStarted.Title" DefaultValue="Try it out"/>
         <bt:String id="CommandsGroup.Label" DefaultValue="Commands Group"/>
         <bt:String id="TaskpaneButton.Label" DefaultValue="Show Taskpane"/>
-        <bt:String id="ProtectionButtonLabel" DefaultValue="Toggle Worksheet Protection" />
-        <bt:String id="Functions.Namespace" DefaultValue="Ryfi" />
-        <bt:String id="Ryfi.Label" DefaultValue="Ryfi"/>
       </bt:ShortStrings>
       <bt:LongStrings>
-        <bt:String id="GetStarted.Description" DefaultValue="Your sample add-in loaded succesfully. Go to the HOME tab and click the 'Show Taskpane' button to get started."/>
-        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Click to Show a Taskpane"/>
-        <bt:String id="ProtectionButtonToolTip" DefaultValue="Click to protect or unprotect the current worksheet." />
+        <bt:String id="GetStarted.Description" DefaultValue="Try me."/>
+        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Click me"/>
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>

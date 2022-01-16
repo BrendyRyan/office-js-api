@@ -105,3 +105,12 @@ async function getRangeValue(address) {
   // Return the value of the cell at the input address.
   return range.values[0][0];
 }
+
+/**
+ * Returns the volume of a sphere.
+ * @customfunction
+ * @param {number} radius
+ */
+function sphereVolume(radius) {
+  return (Math.pow(radius, 3) * 4 * Math.PI) / 3;
+}

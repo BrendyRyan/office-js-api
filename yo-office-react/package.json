@@ -19,10 +19,10 @@
     "lint:fix": "office-addin-lint fix",
     "prettier": "office-addin-lint prettier",
     "start": "office-addin-debugging start manifest-yo-react.xml",
-    "start:desktop": "office-addin-debugging start manifest.xml desktop",
-    "start:web": "office-addin-debugging start manifest.xml web",
-    "stop": "office-addin-debugging stop manifest.xml",
-    "validate": "office-addin-manifest validate manifest.xml",
+    "start:desktop": "office-addin-debugging start manifest-yo-react.xml desktop",
+    "start:web": "office-addin-debugging start manifest-yo-react.xml web",
+    "stop": "office-addin-debugging stop manifest-yo-react.xml",
+    "validate": "office-addin-manifest validate manifest-yo-react.xml",
     "watch": "webpack --mode development --watch"
   },
   "dependencies": {
